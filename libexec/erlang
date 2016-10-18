@@ -165,7 +165,8 @@ erlang_clean_compile() {
       echo \"using rebar to compile files\"
       [[ \"$SKIP_MIX_CLEAN\" != \"true\" ]] && $REBAR_CMD clean skip_deps=true || :
       $REBAR_CMD compile
-    elif [ \"$BUILD_CMD\" = \"mix\" ] && [ \"$RELEASE_CMD\" = \"mix\" ]; then
+      # this is broken for Elixir 1.3.2 - hence the change __mix__ to ensure this piece is not executed  !
+    elif [ \"$BUILD_CMD\" = \"mix\" ] && [ \"$RELEASE_CMD\" = \"__mix__\" ]; then
       echo \"Checking whether deps must be compiled for mix version 1.3.0\"
       # see https://github.com/boldpoker/edeliver/issues/94
       if $MIX_CMD --version | grep 'Mix 1.3.2' >/dev/null 2>&1 ; then
